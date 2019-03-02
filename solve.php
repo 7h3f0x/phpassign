@@ -19,16 +19,19 @@ if ($username=='admin') {
 $user=$conn->query("SELECT * from Users where username='".$username."'");
 $info=mysqli_fetch_assoc($user);
 echo "Your Points : ".$info['points']."<br>";
-$ask="SELECT * FROM results WHERE username='".$username."'";
+ $ask="SELECT * FROM results";
 	$res=$conn->query($ask);
-	$i=mysqli_num_fields($res);
 	$result=mysqli_fetch_assoc($res);
 	$query="SELECT * FROM Questions";
 	$result1=$conn->query($query);
 	$count=0;
 while ($row=mysqli_fetch_assoc($result1)) {
 	$i=$row['number'];
-	if ($result["q".$i]=='unanswered') {
+	$ask="SELECT * FROM results WHERE userq='".$username.$i."'";
+	$res=$conn->query($ask);
+	$result=mysqli_fetch_assoc($res);
+	//var_dump($result);
+	if ($result['status']=='not-answered') {
 	echo '<form method="POST" action="eval.php">';
 	echo '<input type="hidden" name="number" value="'.$i.'">';
 	echo 'Question'.$i.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -47,5 +50,4 @@ while ($row=mysqli_fetch_assoc($result1)) {
 if ($count===0) {
 	echo 'You have attempted all available questions';
 }
-
   ?>

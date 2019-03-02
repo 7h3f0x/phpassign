@@ -12,11 +12,27 @@ if ($_COOKIE['user']!='admin') {
 	$points=$_POST['points'];
 	$query="INSERT INTO Questions(question,a,b,c,d,correct,points)VALUES ('".$question."','".$a."','".$b."','".$c."','".$d."','".$correct."',".$points.")";
 	$conn->query($query);
-	$ask="SELECT * FROM results";
+	$ask="SELECT * FROM Questions where question='".$question."'";
 	$res=$conn->query($ask);
-	$i=mysqli_num_fields($res);
-	$query1="ALTER TABLE results ADD q".$i." VARCHAR(64) NOT NULL DEFAULT 'unanswered'";
-	$conn->query($query1);
+	$res1=mysqli_fetch_assoc($res);
+	$i=$res1['number'];
+	// $query1="ALTER TABLE results ADD q".$i." VARCHAR(64) NOT NULL DEFAULT 'unanswered'";
+	$query2="SELECT * FROM Users";
+	$result1=$conn->query($query2);
+	while ($row=mysqli_fetch_assoc($result1)){
+		$x= $row['username'].$i;
+		// echo $x;
+$query1="INSERT INTO results (userq) VALUES ('".$x."')";
+// var_dump($query1);
+// die();
+
+	if($conn->query($query1)){
+		echo "Ez";
+	} else {
+		echo "Error ".$conn->error;
+		die();
+	}
+	}
 	echo 'question added successfully';
 }
 ?>

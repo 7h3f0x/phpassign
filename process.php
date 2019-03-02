@@ -26,9 +26,14 @@ include 'conn.php';
  			header("Location: login.php");
  		}else{
 		$query="INSERT INTO Users(username,password)VALUES ('".$username."','".$password."')";
-			$connection->query($query);
-		$query="INSERT INTO results(username)VALUES ('".$username."')";
 			$conn->query($query);
+		$query1="SELECT * FROM Questions";
+		$result1=$conn->query($query1);
+		while($row=mysqli_fetch_assoc($result1)){
+			$i=$row['number'];
+		$query2="INSERT INTO results(userq)VALUES ('".$username.$i."')";
+			$conn->query($query2);
+		}
 			setcookie('user',$username,time()+(86400*30),"/");
 			header("Location: solve.php");
 		}}} else{
