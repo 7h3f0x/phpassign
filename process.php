@@ -31,7 +31,7 @@ include 'conn.php';
 		$result1=$conn->query($query1);
 		while($row=mysqli_fetch_assoc($result1)){
 			$i=$row['number'];
-		$query2="INSERT INTO results(userq)VALUES ('".$username.$i."')";
+		$query2="INSERT INTO results(userq,q)VALUES ('".$username."','".$i."')";
 			$conn->query($query2);
 		}
 			setcookie('user',$username,time()+(86400*30),"/");

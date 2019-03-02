@@ -16,22 +16,13 @@ if ($_COOKIE['user']!='admin') {
 	$res=$conn->query($ask);
 	$res1=mysqli_fetch_assoc($res);
 	$i=$res1['number'];
-	// $query1="ALTER TABLE results ADD q".$i." VARCHAR(64) NOT NULL DEFAULT 'unanswered'";
 	$query2="SELECT * FROM Users";
 	$result1=$conn->query($query2);
 	while ($row=mysqli_fetch_assoc($result1)){
-		$x= $row['username'].$i;
-		// echo $x;
-$query1="INSERT INTO results (userq) VALUES ('".$x."')";
-// var_dump($query1);
-// die();
+		$x= $row['username'];
+$query1="INSERT INTO results (userq,q) VALUES ('".$x."','".$i."')";
 
-	if($conn->query($query1)){
-		echo "Ez";
-	} else {
-		echo "Error ".$conn->error;
-		die();
-	}
+	$conn->query($query1);
 	}
 	echo 'question added successfully';
 }

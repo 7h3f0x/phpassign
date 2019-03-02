@@ -1,6 +1,7 @@
 <?php
 include 'conn.php';
 $username=$_COOKIE['user'];
+if (isset($username)) {
 if ($username=='admin') {
 	echo '<nav>
 	<a href="solve.php">Questions</a>
@@ -27,10 +28,9 @@ echo "Your Points : ".$info['points']."<br>";
 	$count=0;
 while ($row=mysqli_fetch_assoc($result1)) {
 	$i=$row['number'];
-	$ask="SELECT * FROM results WHERE userq='".$username.$i."'";
+	$ask="SELECT * FROM results WHERE userq='".$username."' AND q='".$i."'";
 	$res=$conn->query($ask);
 	$result=mysqli_fetch_assoc($res);
-	//var_dump($result);
 	if ($result['status']=='not-answered') {
 	echo '<form method="POST" action="eval.php">';
 	echo '<input type="hidden" name="number" value="'.$i.'">';
@@ -50,4 +50,10 @@ while ($row=mysqli_fetch_assoc($result1)) {
 if ($count===0) {
 	echo 'You have attempted all available questions';
 }
+}
+else{
+	header("Location: login.php");
+}
+
+
   ?>
