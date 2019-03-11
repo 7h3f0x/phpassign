@@ -2,7 +2,7 @@
 include 'conn.php';
 $username=$_COOKIE['user'];
 if (isset($username)) {
-if ($username=='admin') {
+if ($username==='admin') {
 	echo '<nav>
 	<a href="solve.php">Questions</a>
 	<a href="leaderboard.php">Leaderboard</a>

@@ -18,7 +18,6 @@ if ($_COOKIE['user']=='admin') {
 	echo "<h1>Leaderboard</h1>";
 	$i=1;
 	$query='SELECT * FROM Users ORDER BY points DESC';
-	$conn=new mysqli('localhost','root','password','Assignment');
 	$result=$conn->query($query);
 
 	echo "<table>";
